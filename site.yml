@@ -1,0 +1,11 @@
+---
+- hosts: all
+  remote_user: vagrant
+  vars_files:
+    - vars/main.yml
+  roles:
+    - role: ansible-role-oracle-jdk
+    - role: ansible-role-maven
+    - role: ansible-role-ant
+  tasks:
+    - include_tasks: phoebus.yml

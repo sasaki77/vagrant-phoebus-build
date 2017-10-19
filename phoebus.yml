@@ -1,0 +1,27 @@
+---
+- name: Install packages from yum
+  yum: name={{ item }} state=present
+  with_items:
+    - vim
+    - git
+    - wget
+    - firefox
+  become: true
+
+- name: Install packages from pip
+  become: yes
+  pip: name={{ item }} state=latest
+  with_items:
+    - Sphinx
+
+- name: add environments to bash_profile
+  lineinfile:
+    path: "~/.bash_profile"
+    state: present
+    line: "{{item}}"
+  with_items:
+    - "export M3_HOME={{maven_name}}"
+    - "export PATH=$PATH:$M3_HOME/bin"
+    - "export JAVA_HOME={{oracle_jdk_name}}"
+    - "export ANT_HOME={{ant_name}}"
+    - "export PATH=$PATH:$ANT_HOME/bin"
